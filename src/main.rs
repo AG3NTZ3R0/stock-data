@@ -9,13 +9,23 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let msg = "Failed to generate date";
     let date1 = NaiveDate::from_ymd_opt(2023, 01, 01).expect(msg);
     let date2 = NaiveDate::from_ymd_opt(2024, 01, 01).expect(msg);
+    
     let url = build_yahoo_finance_url_from_dates("NVDA", date1, date2, "1d", true);
+    let path = "output/stock_data.csv"; 
+    download_stock_data(&url, &path).await?;
 
+    Ok(())
+}
+
+async fn download_stock_data(
+    url: &str,
+    path: &str,
+) -> Result<(), Box<dyn Error>> {
     let response = reqwest::get(url).await?;
 
     if response.status().is_success() {
         let bytes = response.bytes().await?;
-        let mut file = File::create("output/stock_data.csv").await?;
+        let mut file = File::create(path).await?;
         file.write_all(&bytes).await?;
         println!("Successfully downloaded CSV");
     } else {
