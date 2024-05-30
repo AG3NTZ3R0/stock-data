@@ -3,6 +3,15 @@ name = "stock-data"
 version = "0.1.0"
 authors = ["Brandon J. Lacy lacy.brandon.j@gmail.com"]
 edition = "2021"
+description = "A Rust crate for efficiently downloading historical stock data from Yahoo Finance, featuring asynchronous operations with reqwest and tokio for optimal performance."
+license = "MIT"
+repository = "https://github.com/AG3NTZ3R0/stock-data"
+readme = "README.md"
+keywords = ["stock", "stock-data", "yahoo", "yahoo-finance"]
+categories = ["finance"]
+
+[badges]
+maintenance = { status = "actively-developed" }
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
