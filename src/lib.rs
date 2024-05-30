@@ -114,6 +114,38 @@ mod tests {
     use std::fs::File;
     use std::io::Read;
 
+    #[test]
+    fn test_build_yahoo_finance_url_from_dates() {
+        let symbol = "AMZN";
+        let date1 = NaiveDate::from_ymd_opt(2021, 1, 1).unwrap();
+        let date2 = NaiveDate::from_ymd_opt(2022, 1, 1).unwrap();
+        let interval = "1d";
+        let include_adjusted_close = true;
+
+        let url = build_yahoo_finance_url_from_dates(symbol, date1, date2, interval, include_adjusted_close);
+
+        assert_eq!(
+            url,
+            "https://query1.finance.yahoo.com/v7/finance/download/AMZN?period1=1609459200&period2=1640995200&interval=1d&events=history&includeAdjustedClose=true"
+        );
+    }
+
+    #[test]
+    fn test_build_yahoo_finance_url() {
+        let symbol = "AMZN";
+        let period1 = 1609459200;
+        let period2 = 1640995200;
+        let interval = "1d";
+        let include_adjusted_close = true;
+
+        let url = build_yahoo_finance_url(symbol, period1, period2, interval, include_adjusted_close);
+
+        assert_eq!(
+            url,
+            "https://query1.finance.yahoo.com/v7/finance/download/AMZN?period1=1609459200&period2=1640995200&interval=1d&events=history&includeAdjustedClose=true"
+        );
+    }
+
     #[tokio::test]
     async fn test_download_and_write_stock_data() {
         let symbol = "AMZN";
